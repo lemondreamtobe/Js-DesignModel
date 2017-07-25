@@ -41,7 +41,7 @@ var abc = function () {
     return {
         a: function () {
 
-        }; //b,c the same
+        } //b,c the same
     }
 };
 var check = abc();
@@ -61,7 +61,7 @@ var abc = function () {
 abc.prototype = {
     a: function () {
 
-    }; //b,c the same
+    }//b,c the same
 };
 
 //链式作用
@@ -73,7 +73,7 @@ abc.prototype = {
 
         //do something
         return this;
-    }; //b,c the same
+    } //b,c the same
 };
 
 //在原生对象的原型中定义公用方法
