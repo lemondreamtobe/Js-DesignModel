@@ -22,4 +22,4 @@ var Book = function (id, name, price) {
     //构造器
     this.setName(name);
     this.setPrice(name);
-}
+};
