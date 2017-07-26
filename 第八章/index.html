@@ -5,13 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+    <input type="text" id="myInput">
     <script type="text/javascript" src="../jquery-1.12.1.min.js" ></script>
-    <script src="index.js"></script>
+    <script src="Gm.js"></script>
     <script>
         console.log($);
         console.log(Gm.Date.dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss'));
         console.log(Gm.Date.getDurationStr(72));
-        console.log(Gm.String.isValidIP('2017 8 27'));
+        console.log(Gm.Boolean.isValidIP('2017 8 27'));
+        Gm.Event.addEvent('#myInput', 'click', function (event) {
+            alert(event.target);
+        })
     </script>
 </body>
 </html>
