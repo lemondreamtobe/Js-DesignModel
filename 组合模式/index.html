@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script src="index.js"></script>
+    <script>
+        var news1 = new Container('news', document.body);
+        news1.add(
+            new Item('normal').add(
+                new IconNews('hello', '#', 'video')
+            )
+        ).add(
+            new Item('normal').add(
+                new IconNews('world', '#', 'video')
+            )
+        ).show();
+    </script>
+</body>
+</html>
