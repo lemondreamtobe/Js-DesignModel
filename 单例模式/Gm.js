@@ -8,12 +8,12 @@ var Gm = {
 
     },
     Ajax: {
-        ajaxPost: function(url, pData, success, error) {
+        post: function(url, pData, success, error) {
+
             if(!$ && !jQuery) {
                 alert('not find jquery');
                 return;
             }
-
             $.ajax({
                 type: "post",
                 url: url,
@@ -32,12 +32,12 @@ var Gm = {
                 }
             });
         },
-        ajaxGet: function(url, pData, success, error) {
+        get: function(url, pData, success, error) {
+
             if(!$ && !jQuery) {
                 alert('not find jquery');
                 return;
             }
-
             $.ajax({
                 type: "get",
                 url: url,
@@ -84,12 +84,14 @@ var Gm = {
         },
         isValidIP: function (ip) {
             var reSpaceCheck = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/;
+
             if (reSpaceCheck.test(ip)) {
                 ip.match(reSpaceCheck);
-                if (RegExp.$1<=255&&RegExp.$1>=0
-                    &&RegExp.$2<=255&&RegExp.$2>=0
-                    &&RegExp.$3<=255&&RegExp.$3>=0
-                    &&RegExp.$4<=255&&RegExp.$4>=0)
+
+                if (RegExp.$1 <= 255 && RegExp.$1 >= 0
+                    && RegExp.$2 <= 255 && RegExp.$2 >= 0
+                    && RegExp.$3 <= 255 && RegExp.$3 >= 0
+                    && RegExp.$4 <= 255 && RegExp.$4 >= 0)
                 {
                     return true;
                 }
