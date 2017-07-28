@@ -91,3 +91,31 @@ var Observer = (function () {
         }
     }
 })();
+function Student(result) {
+    var that = this;
+    that.result = result;
+
+    //回答问题的动作
+    that.say = function () {
+        console.log(that.result);
+    };
+};
+Student.prototype.answer = function (question) {
+
+    //回答问题的方法
+    Observer.regist(question, this.say);
+};
+Student.prototype.sleep = function (question) {
+
+    console.log(this.result + ' ' + question + ' is delete');
+    Observer.remove(question, this.say);
+};
+function Teacher() {
+
+    //教师类
+};
+Teacher.prototype.ask = function (question) {
+    console.log('this question' + 'is' + ':' + question);
+    Observer.fire(question);
+};
+
