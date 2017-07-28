@@ -8,7 +8,7 @@ var Gm = {
 
     },
     Ajax: {
-        post: function(url, pData, success, error) {
+        post: function(url, pData, success, error, complete) {
 
             if(!$ && !jQuery) {
                 alert('not find jquery');
@@ -28,6 +28,10 @@ var Gm = {
                 },
                 success: function(ret) {
                     success && success(ret);
+                    return;
+                },
+                complete: function (ret) {
+                    complete && complete(ret);
                     return;
                 }
             });
