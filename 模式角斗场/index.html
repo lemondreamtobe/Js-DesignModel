@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        function a() {
+            var that = this;
+            that.name = 'k';
+        };
+        a.prototype = {
+            allk: function () {
+                alert('a');
+
+            },
+            bll: {
+                allk: function () {
+                    alert('b');
+
+                }
+            }
+        };
+        var al = new a();
+        al.allk();
+        al.bll.allk();
+    </script>
+</body>
+</html>

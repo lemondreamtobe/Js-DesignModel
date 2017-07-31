@@ -82,36 +82,22 @@ Init.prototype = {
                 'showPolice': false,
                 'name': 'displayName'
             });
-        },
-        pagination: function (total) {
-
-            if(total == 0) {
-                $("#prevPagination").text(0);
-                $("#afterPagination").html('<span id="page"></span>');
-            }
-
-            if(total) {
-                var p = (Math.floor(total / 20) + ((total % 20) ? 1 : 0));
-                $("#prevPagination").text(total);
-                $("#afterPagination").html('<span id="page">' + parseInt(that.page + 1) + '</span>/' + p);
-            }
-        },
+        }
     },
-    Tools: {
-        getForms: function (ele, name) {
-            that[name] = $(ele).val();
-            return that[name];
-        },
-        timeDealer: function (time) {
-            var now = new Date();
-            var end = null;
-            var timeS;
-            var timeE;
-            that.beginTime = '';
-            that.endTime = '';
-            switch (time) {
-                case '1' :
-                    end = new Date(now.getTime()- 6 * 24 * 3600 * 1000);
+    getForms: function (ele, name) {
+        this[name] = $(ele).val();
+        return this[name];
+    },
+    timeDealer: function (time) {
+        var now = new Date();
+        var end = null;
+        var timeS;
+        var timeE;
+        this.beginTime = '';
+        this.endTime = '';
+        switch (time) {
+            case '1' :
+                end = new Date(now.getTime()- 6 * 24 * 3600 * 1000);
                     break;
 
                 case '2' :
@@ -127,8 +113,8 @@ Init.prototype = {
             };
 
             if (typeof timeS !== 'undefined' && typeof timeE !== 'undefined') {
-                that.beginTime = getTimeByDateStr(timeS);
-                that.endTime = getTimeByDateStr(timeE);
+                this.beginTime = getTimeByDateStr(timeS);
+                this.endTime = getTimeByDateStr(timeE);
             } else {
                 now.setHours('23');
                 now.setMinutes('59');
@@ -138,8 +124,8 @@ Init.prototype = {
                 end.setMinutes('0');
                 end.setSeconds('0');
                 end.setMilliseconds('0');
-                that.beginTime = Math.floor(end.getTime());
-                that.endTime = Math.floor(now.getTime());
+                this.beginTime = Math.floor(end.getTime());
+                this.endTime = Math.floor(now.getTime());
             };
         },
         tableSwitch: function() {
@@ -158,58 +144,70 @@ Init.prototype = {
         },
         pagePrev: function () {
 
-            if(that.page == 0) {
+            if(this.page == 0) {
                 return;
             }
 
-            if(that.page == 1) {
+            if(this.page == 1) {
                 $('#pagePrev').attr('disabled', true);
             }
-            that.page -= 1;
-            $("#page").text(parseInt(that.page + 1));
-            that.Dom.Table(that.infoArray[that.page]);
-            that.Tools.tableSwitch();
+            this.page -= 1;
+            $("#page").text(parseInt(this.page + 1));
+            this.Dom.Table(this.infoArray[this.page]);
+            this.Tools.tableSwitch();
             $('#pageNext').attr('disabled', false);
             $("#btnModify").attr('disabled', true);
             return;
         },
         pageNext: function () {
             // 达到最大页数
-            if(that.pageCount != -1 && that.page >= that.pageCount) {
+            if(this.pageCount != -1 && this.page >= this.pageCount) {
                 $('#pageNext').attr('disabled', true);
                 return;
             }
 
             // 如果当前页未满条数，不处理
-            if(that.infoArray[that.page].length < that.pageSize) {
+            if(this.infoArray[this.page].length < this.pageSize) {
                 $('#pageNext').attr('disabled', true);
                 return;
             }
-            that.page++;
-            $("#page").text(parseInt(that.page + 1));
+            this.page++;
+            $("#page").text(parseInt(this.page + 1));
             $("#btnModify").attr('disabled', true);
 
             // 如果当前页满数据条数，并且下一页未加载过数据，则请求下一页数据
-            if(!that.infoArray[that.page]) {
-                that.params.page = that.page;
+            if(!this.infoArray[this.page]) {
+                this.params.page = this.page;
 
-                that.search();
+                this.search();
 
                 $('#pagePrev').attr('disabled', false);
                 return;
             }
 
             // 如果下一页加载过数据
-            if(that.infoArray[that.page]) {
-                that.Dom.Table(that.infoArray[that.page]);
+            if(this.infoArray[this.page]) {
+                this.Dom.Table(this.infoArray[this.page]);
                 this.tableSwitch();
                 $('#pagePrev').attr('disabled', false);
 
-                if(that.pageCount != -1 && that.page >= that.pageCount) {
+                if(this.pageCount != -1 && this.page >= this.pageCount) {
                     $('#pageNext').attr('disabled', true);
                 }
                 return;
             }
+        },
+    pagination: function (total) {
+
+        if(total == 0) {
+            $("#prevPagination").text(0);
+            $("#afterPagination").html('<span id="page"></span>');
+        }
+
+        if(total) {
+            var p = (Math.floor(total / 20) + ((total % 20) ? 1 : 0));
+            $("#prevPagination").text(total);
+            $("#afterPagination").html('<span id="page">' + parseInt(this.page + 1) + '</span>/' + p);
         }
     },
     onSearch: function () {
@@ -296,7 +294,7 @@ function success(ret) {
             that.total = body.total;
             //var  onlineD = "在线天数";
             that.Dom.table(person);
-            that.Tools.tableSwitch();
+            that.tableSwitch();
             that.Dom.pagination(that.total);
 
             //超过最大页数，展示下一页按钮
