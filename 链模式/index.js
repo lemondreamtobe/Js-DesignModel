@@ -127,4 +127,47 @@ Gm.extend({
         };
         return this;
     }
+});
+Gm.fn.extend({
+    attr : function () {
+        var arg = arguments,
+            len = arg.length;
+
+        if (this.length < 1) {
+            return this;
+        }
+
+        if (len === 1) {
+
+            if (typeof arg[0] === 'string') {
+                return this[0].getAttribute(arg[0]);
+            } else if (typeof arg[0] === 'object') {
+                for (var i in arg[0]) {
+                    for (var j = this.length -1; j >= 0; j--) {
+                        this[j].setAttribute(i, arg[0][i]);
+                    }
+                }
+            }
+        } else if (len === 2) {
+            for (var j = this.length - 1; j >= 0; j--) {
+                this[j].setAttribute(arg[0], arg[1]);
+            }
+        }
+        return this;
+    }
+});
+Gm.fn.extend({
+    html : function () {
+        var arg = arguments,
+            len = arg.length;
+
+        if (len === 0) {
+            return this[0] && this[0].innerHTML;
+        } else {
+            for (var i = this.length -1; i >= 0; i--) {
+                this[i].innerHTML = arg[0]
+            }
+        }
+        return this;
+    }
 })
