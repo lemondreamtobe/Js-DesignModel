@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="es5-shim.js"></script>
+    <!--<script src="index.js"></script>-->
+</head>
+<body>
+    <div style="width: 200px; height: 200px; background: rebeccapurple"></div>
+    <button id="btn">确定</button>
+    <script>
+        var btn = document.getElementById('btn');
+        var div = document.getElementsByTagName('div')[0];
+        function test() {
+            console.log(arguments, this);
+        };
+//        var bindFn = test.bind();
+//        btn.addEventListener('click', bindFn);
+
+//        var bindFn = test.bind(btn);
+//        btn.addEventListener('click', bindFn);
+
+//        var bindFn = test.bind(div);
+//        btn.addEventListener('click', bindFn);
+
+        function curry(fn) {
+            var slice = [].slice;
+            var args = slice.call(arguments, 1);
+            return function () {
+                var addargs = slice.call(arguments);
+                var all = args.concat(addargs);
+                return fn.apply(null, all);
+            }
+        };
+
+        //重写bind
+        function bind(fn, context) {
+            var slice = [].slice,
+                args = slice.call(arguments, 2);
+            return function () {
+                var addargs = slice.call(arguments),
+                    all = args.concat(addargs);
+                return fn.apply(context, all);
+            }
+        };
+        var demo1 = {
+            text : 'first message'
+        };
+        var demo2 = {
+            text : 'second message'
+        };
+        var bindFn = bind(test, btn, demo1);
+        //原生方法
+
+//        var bindFn = test.bind(div, demo1, demo2);
+        btn.addEventListener('click', bindFn);
+
+        //兼容
+        if (Function.prototype.bind === undefined) {
+            Function.prototype.bind = function (context) {
+                var slice = [].slice,
+                    args = slice.call(arguments, 1),
+                    that = this;
+                return function () {
+                    var addargs = slice.call(arguments),
+                        all = args.concat(addargs);
+                    return fn.apply(context, all);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
