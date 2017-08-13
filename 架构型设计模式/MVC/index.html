@@ -122,8 +122,13 @@
                                         '<a class="image" href="{#href#}"><img src="common/img/{#img#}"></a>',
                                     '</div>',
                                 '</li>'
-                            ]
-                        }
+                            ].join('');
+                        };
+                        //渲染全部导航图片模块
+                        for(var i = 0, len = data.length;i < len;i++) {
+                            html += Gm.formateString(tpl.item, data[i]);
+                        };
+                        dom.html(Gm.formateString(tpl.container, {content : html})).appendTo('body');
                     }
                 };
                 return function (v) {
@@ -138,7 +143,50 @@
 
                 //视图数据层对象操作方法引用
                 var V = MVC.view;
-                var C = {};
+                var C = {
+                    initSlideBar: function () {
+                        V('createSlideBar');
+                        Gm('li', 'slidebar').on('mouseover', function (e) {
+                            Gm(this).addClass('show');
+                        }).on('mouseout', function (e) {
+                            Gm(this).removeClass('show');
+                        });
+                        Gm('.slidebar-close', 'slidebar').on('click', function (e) {
+                            if (M.getConf('slideBarCloseAnimate')) {
+                                return false;
+                            }
+                            M.setConf('slideBarCloseAnimate', true);
+                            var $this = Gm(this);
+                            if ($this.hasClass('is-close')) {
+                                Gm('.slidebar-inner', 'slidebar').animate({
+                                    duration: 800,
+                                    type: 'easeOutQuart',
+                                    main: function (dom) {
+                                        dom.css('left', -50+this.tween*50 +'px');
+                                    },
+                                    end: function () {
+                                        $this.removeClass('is-close');
+                                        M.setConf('slideBarCloseAnimate', false);
+                                    }
+                                });
+                            } else {
+                                Gm('.slidebar-inner', 'slidebar').animate({
+                                    duration: 800,
+                                    type: 'easeOutQuart',
+                                    main: function (dom) {
+                                        dom.css('left', this.tween*50 +'px')
+                                    },
+                                    end: function () {
+                                        $this.addClass('is-close');
+                                        M.setConf('slideBarCloseAnimate', false);
+
+                                    }
+                                })
+                            }
+                        })
+                    }
+                };
+                C.initSlideBar();
             }();
         })
     </script>
