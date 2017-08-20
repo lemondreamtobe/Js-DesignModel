@@ -110,3 +110,8 @@ abc.addWay('a', function () {
 });
 var abc = new father();
 abc.a().b().c();
+
+Function.prototype.addWay = function (name, fn, self) {
+    self ? this[name] = fn : this.prototype[name] = fn;
+    return this;
+}

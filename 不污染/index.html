@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        Function.prototype.addWay = function (name, fn, self) {
+            self ? this[name] = fn : this.prototype[name] = fn;
+            return this;
+        };
+        var test = function () {
+            this.a = 1;
+            this.b = 2;
+            this.c = [2,2,3,4];
+            this.d = {
+                e:1
+            }
+        };
+        test.addWay('say', function () {
+            console.log('say');
+        }, true).addWay('answer', function () {
+            console.log('answer');
+        }, false);
+        var a = new test();
+      var test1 = function () {
+
+      };
+      test1.prototype = new test();
+      var b = new test1();
+      console.log(b.b);
+      var c = {};
+      for(var i in b) {
+          c[i] = b[i];
+      };
+      console.log(c);
+    </script>
+</body>
+</html>
