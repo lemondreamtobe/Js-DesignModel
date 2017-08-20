@@ -109,4 +109,4 @@ abc.addWay('a', function () {
     return this;
 });
 var abc = new father();
-abc.a();
+abc.a().b().c();
