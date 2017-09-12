@@ -4,15 +4,6 @@
 //外观模式 主要用于兼容
 function addEvent(node, type, listener) {
 
-    //使用前面的方法检查兼容性
-    if (!isCompatible()) {
-        return false;
-    };
-
-    if (!(node = $(node))) {
-        return false;
-    };
-
     if (node.addEventListener) {
 
         //W3C方法
