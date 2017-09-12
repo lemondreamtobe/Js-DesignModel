@@ -33,3 +33,5 @@ function abc() {
     heti.age = new c();
     return heti;
 }
+
+//建造者模式构成的对象也可以说是一种复合对象
