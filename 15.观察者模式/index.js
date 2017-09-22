@@ -91,9 +91,10 @@ var Observer = (function () {
         }
     }
 })();
-function Student(result) {
+function Student(name ,result) {
     var that = this;
     that.result = result;
+    that.name   = name;
 
     //回答问题的动作
     that.say = function () {
@@ -104,18 +105,23 @@ Student.prototype.answer = function (question) {
 
     //回答问题的方法
     Observer.regist(question, this.say);
+    Observer.regist(this.name, Teacher.prototype.angery);
 };
 Student.prototype.sleep = function (question) {
 
-    console.log(this.result + ' ' + question + ' is delete');
+    console.log(this.name + ' can not answer ' + ' ' + question + ' beacuse Of sleeping');
     Observer.remove(question, this.say);
+    Observer.fire(this.name, {name : this.name});
 };
 function Teacher() {
 
     //教师类
 };
 Teacher.prototype.ask = function (question) {
-    console.log('this question' + 'is' + ':' + question);
+    console.log('上课没多久，老师问学生问题 ' + ':' + question);
     Observer.fire(question);
 };
+Teacher.prototype.angery = function(args) {
+    console.log('李老师看见有人睡觉怒吼地说：' + args.args.name + ' 你给我滚出去！');
+}
 
