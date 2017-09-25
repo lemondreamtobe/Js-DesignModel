@@ -37,7 +37,7 @@ var Waiter = function () {
             _exec(doneArr); //执行解决成功的回调
         },
         reject : function () {
-            this.rejected = true; //设置当前监控对象解决success
+            this.rejected = true; //设置当前监控对象解决fail
 
             if (!dfd.length) {
 
